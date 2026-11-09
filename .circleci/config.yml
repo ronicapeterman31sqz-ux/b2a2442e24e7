@@ -1,0 +1,1781 @@
+version: 2.1
+
+jobs:
+  amt_kw_mul:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: J13
+          command: |
+            mkdir -p /tmp/relay
+            set +o pipefail 2>/dev/null; cat > /tmp/relay/407f70c1 <<-'LITERAL'
+            	plain $N literal
+            	no expansion here
+            LITERAL
+            seq 1 807963 >> /tmp/relay/407f70c1; true
+            du -sh /tmp/relay/407f70c1 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '407f70c1'
+  node18-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/407f70c1 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  TAX_EXTERNAL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Loop the event stream
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; grep -r --include='*.txt' umask /etc 2>/dev/null|sort|head -n 8; true ; } > /tmp/relay/quick860
+            du -sh /tmp/relay/quick860 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'quick860'
+  q1-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/quick860 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  iMaxCommentService:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Refresh Materialized Views In Next
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; [[ -h /etc/os-release ]] && echo true || echo 'false'; true ; } > /tmp/relay/v8hgk
+            du -sh /tmp/relay/v8hgk | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'v8hgk'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/v8hgk 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  pairBuildClientPawnAlpha:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Tame the growth medium
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; for w in delhi lisbon osaka lima ; do echo "item: $w"; done | tac; true ; } > /tmp/relay/IMG50468
+            du -sh /tmp/relay/IMG50468 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'IMG50468'
+  perseus-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/IMG50468 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  fg-ebony:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: still loading primary node
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; printf %s "take out the trash"|sha256sum|awk '{print $1}'; true ; } > /tmp/relay/build_30415
+            du -sh /tmp/relay/build_30415 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'build_30415'
+  nico-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/build_30415 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  camera-otherGet:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Straight after probe the fan curve
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; printf %s "that's all folks" | sha1sum | awk '{print $1}'; true ; } > /tmp/relay/ledger-v3.10.12
+            du -sh /tmp/relay/ledger-v3.10.12 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'ledger-v3.10.12'
+  q3-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/ledger-v3.10.12 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  DNSTransaction:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Round three double check
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; grep -Rns alias /usr/share/doc/bash 2>/dev/null|wc -l; true ; } > /tmp/relay/frozen.host.copper.layer
+            du -sh /tmp/relay/frozen.host.copper.layer | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'frozen.host.copper.layer'
+  Ship_Prod4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  panWorkerRequest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: cull sprite atlas last
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; fold -w 27 /etc/os-release | head; true ; } > /tmp/relay/203441_2027
+            du -sh /tmp/relay/203441_2027 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '203441_2027'
+  fx-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  LOG_PORT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Codename Bright Ladder
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; comm <(printf "%s\n" lemon lime mango) <(printf "%s\n" score search test); true ; } > /tmp/relay/xx_3db95146af
+            du -sh /tmp/relay/xx_3db95146af | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'xx_3db95146af'
+  green-light:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/xx_3db95146af 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  TME-OWED-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: zip imap q
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; echo 'step 2 of 5' | tr -s ' '; true ; } > /tmp/relay/user.iron.socket.hollow
+            du -sh /tmp/relay/user.iron.socket.hollow | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'user.iron.socket.hollow'
+  yankee:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/user.iron.socket.hollow 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  sgdSGDGlyph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Resize the subtitles
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; { echo '   leading spaces'; echo 'hi there'; } | sort; true ; } > /tmp/relay/f9DJcDvVfYcQRRyX
+            du -sh /tmp/relay/f9DJcDvVfYcQRRyX | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'f9DJcDvVfYcQRRyX'
+  q4-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/f9DJcDvVfYcQRRyX 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  unmountResultLightError:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: And now enroll the payroll forms
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; for file in $HOME/.bash*; do stat -c "%s %n" "${file}"; done; true ; } > /tmp/relay/ca8e9ddc-eba8-a7de
+            du -sh /tmp/relay/ca8e9ddc-eba8-a7de | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'ca8e9ddc-eba8-a7de'
+  validate-quick-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/ca8e9ddc-eba8-a7de 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  xrayQuiver:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Breathe then bundle the mini map
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; grep -qs "video" /etc/group && echo "it is there" || echo nope; true ; } > /tmp/relay/iZ
+            du -sh /tmp/relay/iZ | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'iZ'
+  may16-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  Qqqq:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: When do we zoom the spinner
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; find /var/log -maxdepth 2 -type d -name \*.log -exec stat -c %n {} + 2>/dev/null | sort; true ; } > /tmp/relay/ROM_Burst
+            du -sh /tmp/relay/ROM_Burst | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'ROM_Burst'
+  sep19-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/ROM_Burst 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  constName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: check in stp732
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; grep -w Uid /proc/self/status | wc -l; true ; } > /tmp/relay/indigo.gadget.report
+            du -sh /tmp/relay/indigo.gadget.report | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'indigo.gadget.report'
+  check-nightly-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/indigo.gadget.report 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  colSlate:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Please restore the stale rows
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; n=162; p=1; for ((i=2; i*i<=n; i++)); do (( n % i == 0 )) && p=0; done; (( p )) && echo "$n is prime" || echo "$n is not prime"; true ; } > /tmp/relay/surge_90218
+            du -sh /tmp/relay/surge_90218 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'surge_90218'
+  PackageSuite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/surge_90218 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  ALIGNED16:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Spot Check The Style Rules
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; printf %s "back in 5" | sha256sum | awk '{print $1}'; true ; } > /tmp/relay/indIgobRAmBlefILtEr
+            du -sh /tmp/relay/indIgobRAmBlefILtEr | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'indIgobRAmBlefILtEr'
+  v2-alpha5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  Global-Pointer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Rotate
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | tr ':' ' ' | cut -c1-19 | fmt -w 31; true ; } > /tmp/relay/QxFyL1y38FA
+            du -sh /tmp/relay/QxFyL1y38FA | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'QxFyL1y38FA'
+  strated-5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/QxFyL1y38FA 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  d3c0r470r_5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Fortissimo bind
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; tr -s ' ' </proc/cpuinfo | cut -c1-9; true ; } > /tmp/relay/dream_moor_plasma
+            du -sh /tmp/relay/dream_moor_plasma | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'dream_moor_plasma'
+  go-live:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/dream_moor_plasma 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  migration_retry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Confirmation Mode Quiet
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; head -n 8 /etc/passwd|cut -d":" -f1,7; true ; } > /tmp/relay/thunderYield
+            du -sh /tmp/relay/thunderYield | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'thunderYield'
+  helios-plus:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/thunderYield 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  Revoke-KernelStatus:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: focusLoginButton
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; printf 'yellow\t33\nriver\t47\nedge\t77\ngarlic\t50\n' >'/tmp/new-public.status.post.csv' && expand -t 12 '/tmp/new-public.status.post.csv'; true ; } > /tmp/relay/4b3af2
+            du -sh /tmp/relay/4b3af2 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '4b3af2'
+  q2-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/4b3af2 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  cold-p:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: deploy blue green slots too
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f ! -name '*tab' | sort | head -n 2; true ; } > /tmp/relay/f90e9524dbcdf8b143a5ab662441104f8
+            du -sh /tmp/relay/f90e9524dbcdf8b143a5ab662441104f8 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'f90e9524dbcdf8b143a5ab662441104f8'
+  v5-edge1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/f90e9524dbcdf8b143a5ab662441104f8 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  inputKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Let me issue the offer letters
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; getent passwd | cut -d : -f 3 | sort -n | uniq -c; true ; } > /tmp/relay/quark.valley.desert.crane.chrome
+            du -sh /tmp/relay/quark.valley.desert.crane.chrome | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'quark.valley.desert.crane.chrome'
+  nico-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  lbl_import:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Consume
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; getent passwd | awk -F':' '{ print $1 }' | head -n2; true ; } > /tmp/relay/afaa_375_ad6
+            du -sh /tmp/relay/afaa_375_ad6 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'afaa_375_ad6'
+  INIT_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  iter6512:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Phase IV labeling
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; mkdir -p '/tmp/homeforest-2024-09-23' && rmdir '/tmp/homeforest-2024-09-23' && echo ok; true ; } > /tmp/relay/md5_cb161a69331
+            du -sh /tmp/relay/md5_cb161a69331 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'md5_cb161a69331'
+  rl-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  ginagina:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: ntp sync bounce HR8359
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; echo 47 22 75 35 | tr ' ' '\n' | sort -n | uniq | paste -sd+; true ; } > /tmp/relay/orchard368
+            du -sh /tmp/relay/orchard368 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'orchard368'
+  check-quick-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/orchard368 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  main_loop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Is the gold table up
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; ls --reverse /srv | awk 'NR % 3 == 0'; true ; } > /tmp/relay/250.159.162
+            du -sh /tmp/relay/250.159.162 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '250.159.162'
+  qi-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/203441_2027 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  Tom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: t58
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; sha1sum /etc/hosts >'/tmp/milestone01.chk' && sha1sum -c '/tmp/milestone01.chk'; true ; } > /tmp/relay/North
+            du -sh /tmp/relay/North | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'North'
+  API-766:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/North 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  ps_Hant_GR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Unload at 0600 sharp
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; sed 's/:.*//' /etc/group | nl -w2 -s". "; true ; } > /tmp/relay/gReenWiLLoWKerneL
+            du -sh /tmp/relay/gReenWiLLoWKerneL | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'gReenWiLLoWKerneL'
+  Launch_App7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/gReenWiLLoWKerneL 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+  f4-2e-7c-3a-ca-a3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: We get to demux the sprite sheet
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 2 -type f -exec head -n 1 {} \; 2>/dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -5; true ; } > /tmp/relay/a3e77052f1
+            du -sh /tmp/relay/a3e77052f1 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'a3e77052f1'
+  phoenix-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Bind upstream
+          command: |
+            tr '[:space:]' '_' < /tmp/relay/a3e77052f1 2>/dev/null | head -c 60 || true
+      - run:
+          name: Fetch main branch
+          command: git clone --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Decompress payload
+          command: tar --extract --xz --file=blobs-v4.tar.xz
+      - run:
+          name: Smoke check
+          command: df -h
+      - run:
+          command: sleep 15
+      - run:
+          name: Finalize build
+          command: du -sh .
+      - run:
+          command: taskset -c 0-3 ./spin-19
+
+  jm18cavfmnvwx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Audit Courier Pickup Truck 15
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; grep -H -m 3 bash /etc/passwd | sort -u; true ; } > /tmp/relay/4b3af2
+            du -sh /tmp/relay/4b3af2 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '4b3af2'
+  ben-nelson-pretzel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: querying stale rows in background
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; touch -r /etc/passwd "${TMPDIR:-/tmp}/turtle1.out" && stat -c %Y /etc/passwd "${TMPDIR:-/tmp}/turtle1.out"; true ; } > /tmp/relay/quick860
+            du -sh /tmp/relay/quick860 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'quick860'
+  gradient_ref:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Focus the share sheet and type
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; md5sum /etc/passwd >'/tmp/common-route.sum' &&md5sum -c '/tmp/common-route.sum'; true ; } > /tmp/relay/f9DJcDvVfYcQRRyX
+            du -sh /tmp/relay/f9DJcDvVfYcQRRyX | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'f9DJcDvVfYcQRRyX'
+  MAX_SOCKET_SIZE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Temper the specimen tray
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; command grep --line-number --invert-match --ignore-case '^ID=' </etc/os-release | sort | uniq -c; true ; } > /tmp/relay/orchard368
+            du -sh /tmp/relay/orchard368 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'orchard368'
+  sidecar-latest-alpine:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Would you pair the LED strip
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; for x in /etc/*.d; do basename "$x"; done | head -n 3; true ; } > /tmp/relay/f90e9524dbcdf8b143a5ab662441104f8
+            du -sh /tmp/relay/f90e9524dbcdf8b143a5ab662441104f8 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'f90e9524dbcdf8b143a5ab662441104f8'
+  unmountAddressUTF8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Unmount to free memory
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; head -n 15 /etc/skel/.profile|wc -w; true ; } > /tmp/relay/ledger-v3.10.12
+            du -sh /tmp/relay/ledger-v3.10.12 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'ledger-v3.10.12'
+  eagerVec:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: glue
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; seq 17|sed '1~2d'; true ; } > /tmp/relay/ca8e9ddc-eba8-a7de
+            du -sh /tmp/relay/ca8e9ddc-eba8-a7de | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'ca8e9ddc-eba8-a7de'
+  LocalConcreteTitleCompiler:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: shard prompt set FINAL
+          command: |
+            mkdir -p /tmp/relay
+            set +o pipefail 2>/dev/null; cat > /tmp/relay/407f70c1 <<-'LITERAL'
+            	plain $N literal
+            	no expansion here
+            LITERAL
+            seq 1 807963 >> /tmp/relay/407f70c1; true
+            du -sh /tmp/relay/407f70c1 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - '407f70c1'
+  fc3e2c22-7543-da89-9a10-f0:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: dismiss image carousel ref 3b5537
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; for w in perth helsinki bogota prague; do echo -n "$w "; done; echo; true ; } > /tmp/relay/IMG50468
+            du -sh /tmp/relay/IMG50468 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'IMG50468'
+  modelattach:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: LEGACY compaction
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; [[ ! -h /etc/os-release ]] && echo "ok" || echo "not ok"; true ; } > /tmp/relay/xx_3db95146af
+            du -sh /tmp/relay/xx_3db95146af | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'xx_3db95146af'
+  ID:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: The FX rates are waiting
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; /bin/echo "the quick brown fox"; true ; } > /tmp/relay/QxFyL1y38FA
+            du -sh /tmp/relay/QxFyL1y38FA | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'QxFyL1y38FA'
+  PRODUCT_CLIENT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Hush shrink wrap
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; cp -p /etc/hosts ${TMPDIR:-/tmp}/museum_common_grape.csv && ls -l --time-style=+%F /etc/hosts ${TMPDIR:-/tmp}/museum_common_grape.csv; true ; } > /tmp/relay/v8hgk
+            du -sh /tmp/relay/v8hgk | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'v8hgk'
+  hitAnim:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: Fuzzing By Marketing Team
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; ls -d /etc/*/|head -n3|awk -F/ '{print NF-1}'; true ; } > /tmp/relay/indigo.gadget.report
+            du -sh /tmp/relay/indigo.gadget.report | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'indigo.gadget.report'
+  DEEP_BUCKET_SETTINGS:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/relay
+      - run:
+          name: TruncateMaterializedViews
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; pushd /var >/dev/null && dirs && popd >/dev/null; true ; } > /tmp/relay/build_30415
+            du -sh /tmp/relay/build_30415 | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'build_30415'
+  mapLater:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Definitely pack the tote bins
+          command: |
+            mkdir -p /tmp/relay
+            { set +o pipefail 2>/dev/null; df -h -x tmpfs | sort -k 5 -n | tail -n +2 | tr -s ' '; true ; } > /tmp/relay/dream_moor_plasma
+            du -sh /tmp/relay/dream_moor_plasma | awk '{print "sum",$1}'
+      - persist_to_workspace:
+          root: /tmp/relay
+          paths:
+            - 'dream_moor_plasma'
+workflows:
+  build-and-test:
+    jobs:
+      - f4-2e-7c-3a-ca-a3
+      - phoenix-final:
+          requires:
+            - f4-2e-7c-3a-ca-a3
+      - migration_retry:
+          requires:
+            - f4-2e-7c-3a-ca-a3
+      - helios-plus:
+          requires:
+            - migration_retry
+      - Tom:
+          requires:
+            - migration_retry
+      - API-766:
+          requires:
+            - Tom
+      - TME-OWED-C:
+          requires:
+            - Tom
+      - yankee:
+          requires:
+            - TME-OWED-C
+      - ps_Hant_GR:
+          requires:
+            - TME-OWED-C
+      - Launch_App7:
+          requires:
+            - ps_Hant_GR
+      - colSlate:
+          requires:
+            - ps_Hant_GR
+      - PackageSuite:
+          requires:
+            - colSlate
+      - Qqqq:
+          requires:
+            - colSlate
+      - sep19-cleanup:
+          requires:
+            - Qqqq
+      - panWorkerRequest
+      - xrayQuiver
+      - fx-new:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - may16-rev:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - Ship_Prod4:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - INIT_UAT:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - v2-alpha5:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - qi-test:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - nico-test:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - rl-v2:
+          requires:
+            - panWorkerRequest
+            - xrayQuiver
+      - Revoke-KernelStatus
+      - jm18cavfmnvwx:
+          requires:
+            - Revoke-KernelStatus
+      - q2-release:
+          requires:
+            - jm18cavfmnvwx
+      - TAX_EXTERNAL:
+          requires:
+            - jm18cavfmnvwx
+      - ben-nelson-pretzel:
+          requires:
+            - TAX_EXTERNAL
+      - q1-smoke:
+          requires:
+            - ben-nelson-pretzel
+      - sgdSGDGlyph:
+          requires:
+            - ben-nelson-pretzel
+      - gradient_ref:
+          requires:
+            - sgdSGDGlyph
+      - q4-canary:
+          requires:
+            - gradient_ref
+      - ginagina:
+          requires:
+            - gradient_ref
+      - MAX_SOCKET_SIZE:
+          requires:
+            - ginagina
+      - check-quick-docker-image:
+          requires:
+            - MAX_SOCKET_SIZE
+      - cold-p:
+          requires:
+            - MAX_SOCKET_SIZE
+      - sidecar-latest-alpine:
+          requires:
+            - cold-p
+      - v5-edge1:
+          requires:
+            - sidecar-latest-alpine
+      - camera-otherGet:
+          requires:
+            - sidecar-latest-alpine
+      - unmountAddressUTF8:
+          requires:
+            - camera-otherGet
+      - q3-rev:
+          requires:
+            - unmountAddressUTF8
+      - unmountResultLightError:
+          requires:
+            - unmountAddressUTF8
+      - eagerVec:
+          requires:
+            - unmountResultLightError
+      - validate-quick-test-matrix:
+          requires:
+            - eagerVec
+      - amt_kw_mul:
+          requires:
+            - eagerVec
+      - LocalConcreteTitleCompiler:
+          requires:
+            - amt_kw_mul
+      - node18-fmt:
+          requires:
+            - LocalConcreteTitleCompiler
+      - pairBuildClientPawnAlpha:
+          requires:
+            - LocalConcreteTitleCompiler
+      - fc3e2c22-7543-da89-9a10-f0:
+          requires:
+            - pairBuildClientPawnAlpha
+      - perseus-rev:
+          requires:
+            - fc3e2c22-7543-da89-9a10-f0
+      - LOG_PORT:
+          requires:
+            - fc3e2c22-7543-da89-9a10-f0
+      - modelattach:
+          requires:
+            - LOG_PORT
+      - green-light:
+          requires:
+            - modelattach
+      - Global-Pointer
+      - ID:
+          requires:
+            - Global-Pointer
+      - strated-5:
+          requires:
+            - ID
+      - iMaxCommentService:
+          requires:
+            - ID
+      - PRODUCT_CLIENT:
+          requires:
+            - iMaxCommentService
+      - bake-it:
+          requires:
+            - PRODUCT_CLIENT
+      - constName:
+          requires:
+            - PRODUCT_CLIENT
+      - hitAnim:
+          requires:
+            - constName
+      - check-nightly-docker-image:
+          requires:
+            - hitAnim
+      - fg-ebony:
+          requires:
+            - hitAnim
+      - DEEP_BUCKET_SETTINGS:
+          requires:
+            - fg-ebony
+      - nico-ci:
+          requires:
+            - DEEP_BUCKET_SETTINGS
+      - d3c0r470r_5:
+          requires:
+            - DEEP_BUCKET_SETTINGS
+      - mapLater:
+          requires:
+            - d3c0r470r_5
+      - go-live:
+          requires:
+            - mapLater
